@@ -1,0 +1,24 @@
+{
+  "name": "xn.catalog.api",
+  "version": "1.0.0",
+  "main": "./src/main.mjs",
+  "scripts": {
+    "development": "ftl & nodemon --experimental-modules --inspect ./src/main.mjs",
+    "start": "node --experimental-modules ./src/main.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "mongodb": "^3.1.4"
+  },
+  "devDependencies": {
+    "ftl": "git+https://github.com/slacktracer/ftl.git",
+    "nodemon": "^1.18.3"
+  },
+  "engines": {
+    "node": "10.9.x",
+    "npm": "6.2.x"
+  }
+}
