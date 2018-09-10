@@ -12,7 +12,7 @@ catalogWebAPI.get("/", async (request, response) => {
   response.json(catalog);
 });
 
-catalogWebAPI.post("/:item", async (request, response) => {
+catalogWebAPI.post("/", async (request, response) => {
   const { client } = request.params;
 
   const item = request.body;

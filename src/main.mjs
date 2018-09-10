@@ -16,5 +16,3 @@ app.get("/", (request, response) => {
 app.use("/:client/catalog", catalogWebAPI);
 
 app.listen(process.env.PORT || 1337);
-
-42;
