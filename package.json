@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "./src/main.mjs",
   "scripts": {
-    "development": "ftl & nodemon --experimental-modules --inspect ./src/main.mjs",
+    "development": "ftl & nodemon --experimental-modules --inspect=11002 ./src/main.mjs",
     "start": "node --experimental-modules ./src/main.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

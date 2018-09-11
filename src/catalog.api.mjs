@@ -1,8 +1,8 @@
-import { getClientCatalog } from "./core/getClientCatalog.mjs";
+import { loadClientCatalog } from "./core/loadClientCatalog.mjs";
 import { saveClientCatalogItem } from "./core/saveClientCatalogItem.mjs";
 
 export const loadCatalog = async ({ client }) => {
-  const catalog = await getClientCatalog({ client });
+  const catalog = await loadClientCatalog({ client });
 
   return catalog;
 };

@@ -15,4 +15,8 @@ app.get("/", (request, response) => {
 
 app.use("/:client/catalog", catalogWebAPI);
 
-app.listen(process.env.PORT || 1337);
+const port = 10002;
+
+app.listen(process.env.PORT || port, () =>
+  global.console.log(`Listening on port ${port}!`)
+);
