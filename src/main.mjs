@@ -13,7 +13,7 @@ app.get("/", (request, response) => {
   response.json({ service: "xn.catalog.api" });
 });
 
-app.use("/:client/catalog", catalogWebAPI);
+app.use("/:clientKey/catalog", catalogWebAPI);
 
 const port = 10002;
 

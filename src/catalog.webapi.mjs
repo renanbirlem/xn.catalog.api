@@ -5,19 +5,19 @@ import * as core from "./catalog.api.mjs";
 export const catalogWebAPI = express.Router({ mergeParams: true });
 
 catalogWebAPI.get("/", async (request, response) => {
-  const { client } = request.params;
+  const { clientKey } = request.params;
 
-  const catalog = await core.loadCatalog({ client });
+  const catalog = await core.loadCatalog({ clientKey });
 
   response.json(catalog);
 });
 
 catalogWebAPI.post("/", async (request, response) => {
-  const { client } = request.params;
+  const { clientKey } = request.params;
 
   const item = request.body;
 
-  const savedItem = await core.saveItem({ client, item });
+  const savedItem = await core.saveItem({ clientKey, item });
 
   response.json(savedItem);
 });
