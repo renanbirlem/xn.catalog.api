@@ -5,7 +5,11 @@ import * as core from "./catalog.api.mjs";
 export const catalogWebAPI = express.Router({ mergeParams: true });
 
 catalogWebAPI.get("/", async (request, response) => {
-  const { clientKey } = request.params;
+  let { clientKey } = request.params;
+
+  if (response.locals.clientKey) {
+    clientKey = response.locals.clientKey;
+  }
 
   const catalog = await core.loadCatalog({ clientKey });
 
