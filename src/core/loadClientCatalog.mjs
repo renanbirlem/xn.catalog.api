@@ -16,16 +16,16 @@ export const loadClientCatalog = ({ clientKey }) => {
 
           const trees = db.collection("trees");
 
-          trees.find({}, { limit: 100 }).toArray((error, result) => {
+          trees.find({}).toArray((error, result) => {
             if (error) {
               reject(error);
             } else {
               resolve(result);
             }
+
+            mongoClient.close();
           });
         }
-
-        mongoClient.close();
       }
     );
   });
