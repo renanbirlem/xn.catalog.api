@@ -16,8 +16,14 @@ catalogWebAPI.get("/", async (request, response) => {
   response.json(catalog);
 });
 
-catalogWebAPI.post("/", async (request, response) => {
-  const { clientKey } = request.params;
+catalogWebAPI.post("/:itemId", async (request, response) => {
+  // este pedaço de código é repetido em toda parte para acomodar clientes legado... <
+  let { clientKey } = request.params;
+
+  if (response.locals.clientKey) {
+    clientKey = response.locals.clientKey;
+  }
+  // este pedaço de código é repetido em toda parte para acomodar clientes legado... >
 
   const item = request.body;
 
