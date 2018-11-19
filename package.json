@@ -3,22 +3,23 @@
   "version": "1.0.0",
   "main": "./src/main.mjs",
   "scripts": {
-    "deploy": "ibmcloud app push beon-api-catalog-dev",
+    "deploy": "ibmcloud app push beon-api-catalog -m 256M -k 512M -b https://github.com/cloudfoundry/nodejs-buildpack",
     "development": "ftl & nodemon --experimental-modules --inspect=11002 ./src/main.mjs",
     "start": "node --experimental-modules ./src/main.mjs"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
+    "eslint": "^5.6.0",
     "express": "^4.16.3",
-    "mongodb": "^3.1.4"
+    "mongodb": "^3.1.4",
+    "prettier": "^1.14.3"
   },
   "devDependencies": {
-    "ftl": "git+https://github.com/slacktracer/ftl.git",
     "nodemon": "^1.18.3"
   },
   "engines": {
-    "node": "10.9.x",
+    "node": "^10.x.x",
     "npm": "6.2.x"
   }
 }
