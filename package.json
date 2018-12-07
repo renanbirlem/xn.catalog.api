@@ -1,25 +1,60 @@
 {
   "name": "xn.catalog.api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "./src/main.mjs",
   "scripts": {
     "deploy": "ibmcloud app push beon-api-catalog -m 256M -k 512M -b https://github.com/cloudfoundry/nodejs-buildpack",
-    "development": "ftl & nodemon --experimental-modules --inspect=11002 ./src/main.mjs",
-    "start": "node --experimental-modules ./src/main.mjs"
+    "dev": "nodemon --experimental-modules ./src/main.mjs",
+    "start": "node --experimental-modules ./src/main.mjs",
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
-    "eslint": "^5.6.0",
     "express": "^4.16.3",
-    "mongodb": "^3.1.4",
-    "prettier": "^1.14.3"
+    "mockingoose": "^2.11.0",
+    "mongoose": "^5.3.15",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "eslint": "^5.6.0",
+    "eslint-plugin-jest": "^21.27.2",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.7",
+    "prettier": "^1.14.3"
   },
   "engines": {
     "node": "^10.x.x",
     "npm": "6.2.x"
+  },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/*.?(m)js?(x)",
+      "**/(*.)(spec|test).?(m)js?(x)"
+    ],
+    "moduleFileExtensions": ["js", "json", "jsx", "node", "mjs"],
+    "transform": {
+      "^.+m?js$": "babel-jest"
+    },
+    "collectCoverage": true,
+    "coverageReporters": ["html"]
+  },
+  "babel": {
+    "env": {
+      "test": {
+        "plugins": [
+          [
+            "transform-es2015-modules-commonjs",
+            {
+              "spec": true
+            }
+          ]
+        ]
+      }
+    }
   }
 }

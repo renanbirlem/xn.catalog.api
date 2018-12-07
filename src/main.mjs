@@ -1,22 +1,11 @@
-import bodyParser from "body-parser";
-import cors from "cors";
-import express from "express";
+import config from "./config";
+import * as connections from "./connections";
+import { app } from "./rest";
 
-import { catalogWebAPI } from "./catalog.webapi.mjs";
+// warm up redis connection
+connections.getRedisConnection({});
 
-const app = express();
-
-app.use(cors());
-app.use(bodyParser.json());
-
-app.get("/", (request, response) => {
-  response.json({ service: "xn.catalog.api" });
+app.listen(config.port, () => {
+    global.console.log(`Listening on port ${config.port}!`);
+    global.console.log(`Connected to MongoDB @ ${config.mongodb_uri}`);
 });
-
-app.use("/:clientKey/catalog", catalogWebAPI);
-
-const port = 10002;
-
-app.listen(process.env.PORT || port, () =>
-  global.console.log(`Listening on port ${port}!`)
-);
