@@ -2,7 +2,7 @@ import redis from "redis";
 import debug from "debug";
 const log = debug("app:connection:redis");
 
-import config from "../../config";
+import config from "../config";
 
 export const connect = () => {
   return new Promise((resolve, reject) => {

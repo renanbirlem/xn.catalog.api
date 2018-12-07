@@ -1,6 +1,6 @@
 /*eslint no-console: ["error", { allow: ["warn", "error", "log"] }] */
 import mongoose from "mongoose";
-import * as redis from "./core/connections/redis";
+import * as redis from "./connections/redis";
 import config from "./config";
 
 mongoose.Promise = global.Promise;

@@ -1,4 +1,4 @@
-import * as connections from "../../../../connections";
+import * as connections from "../../../connections";
 import Product from "./model/product";
 
 import debug from "debug";

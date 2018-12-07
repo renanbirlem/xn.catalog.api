@@ -1,11 +1,11 @@
 import uuid from "uuid";
 import mongoose from "mongoose";
 import mockingoose from "mockingoose";
-import * as connections from "../../../../../src/connections";
+import * as connections from "../../../../src/connections";
 
-import saveProduct from "../../../../../src/core/catalog/product/database/saveProductToDatabase";
+import saveProduct from "../../../../src/core/product/database/saveProductToDatabase";
 
-jest.mock("../../../../../src/connections");
+jest.mock("../../../../src/connections");
 connections.getClientConnection.mockImplementation(() => mongoose);
 
 describe(`product save to database`, () => {
