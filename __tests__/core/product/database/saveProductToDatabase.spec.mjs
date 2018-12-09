@@ -35,23 +35,23 @@ describe(`product save to database`, () => {
             expect(promise).rejects.toThrowError(/client_id.*informed/i);
         });
 
-        it(`should reject with an Error if document does not have key`, async () => {
+        it(`should reject with an Error if invalid sku`, () => {
             const promise = saveProduct({
                 client_id: 1,
-                document: { name: "teste" } // expects sku property
+                sku: null
             });
 
-            expect(promise).rejects.toThrowError(/sku.*present/i);
+            expect(promise).rejects.toThrowError(/sku.*informed/i);
         });
 
-        it(`should reject with an Error if invalid search value`, async () => {
+        it(`should reject with an Error if document does not match sku`, async () => {
             const promise = saveProduct({
                 client_id: 1,
-                key: "product_id",
-                document: { sku: 1, name: "teste" } // expects product_id property
+                sku: 1,
+                document: { sku: 2, name: "teste" } // expects sku property
             });
 
-            expect(promise).rejects.toThrowError(/product_id.*present/i);
+            expect(promise).rejects.toThrowError(/sku.*match/i);
         });
 
         it(`should reject with an Error something bad happens`, async () => {
@@ -59,8 +59,12 @@ describe(`product save to database`, () => {
                 throw new Error();
             });
 
-            const [client_id, document] = [1, { sku: 1, name: "teste" }];
-            const promise = saveProduct({ client_id, document });
+            const [client_id, sku, document] = [
+                1,
+                1,
+                { sku: 1, name: "teste" }
+            ];
+            const promise = saveProduct({ client_id, sku, document });
 
             expect(promise).rejects.toThrowError();
         });
@@ -68,14 +72,15 @@ describe(`product save to database`, () => {
 
     describe(`dealing with documents`, () => {
         it(`result must match updated document`, done => {
-            const [client_id, document] = [
+            const [client_id, sku, document] = [
+                1,
                 1,
                 { _id: uuid.v4(), sku: "1", name: "teste" }
             ];
 
             mockingoose.Product.toReturn(document, "findOneAndUpdate");
 
-            const promise = saveProduct({ client_id, document });
+            const promise = saveProduct({ client_id, sku, document });
 
             promise.then(result => {
                 expect(result).toHaveProperty("_id", document._id);
@@ -85,7 +90,8 @@ describe(`product save to database`, () => {
         });
 
         it(`result must have an _id when inserting`, done => {
-            const [client_id, document] = [
+            const [client_id, sku, document] = [
+                1,
                 1,
                 {
                     // _id: uuid.v4(), a new _id should be returned
@@ -96,7 +102,7 @@ describe(`product save to database`, () => {
 
             mockingoose.Product.toReturn(document, "findOneAndUpdate");
 
-            const promise = saveProduct({ client_id, document });
+            const promise = saveProduct({ client_id, sku, document });
 
             promise.then(result => {
                 expect(result).toHaveProperty("_id");
@@ -108,7 +114,8 @@ describe(`product save to database`, () => {
         it(`should reject to an Error if operation fails`, () => {
             mockingoose.Product.toReturn(new Error(), "findOneAndUpdate");
 
-            const [client_id, document] = [
+            const [client_id, sku, document] = [
+                1,
                 1,
                 {
                     // _id: uuid.v4(), a new _id should be returned
@@ -117,7 +124,7 @@ describe(`product save to database`, () => {
                 }
             ];
 
-            const promise = saveProduct({ client_id, document });
+            const promise = saveProduct({ client_id, sku, document });
 
             expect(promise).rejects.toThrowError();
         });

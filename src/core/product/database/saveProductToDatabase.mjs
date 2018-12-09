@@ -4,19 +4,24 @@ import Product from "./model/product";
 import debug from "debug";
 const log = debug("app:catalog:product:save");
 
-export default ({ client_id, key = "sku", document }) =>
+export default ({ client_id, sku, document }) =>
   new Promise(async (resolve, reject) => {
     try {
-      if (!client_id) throw new Error(`client_id must be informed.`);
+      if (!client_id) {
+        throw new Error(`client_id must be informed.`);
+      }
+
+      if (!sku) {
+        throw new Error(`sku must be informed ${sku}.`);
+      }
 
       // document must provide value for given key
-      if (!document.hasOwnProperty(key))
-        throw new Error(`${key} must be present at document.`);
+      if (!document.sku || document.sku != sku)
+        throw new Error(`document sku does not match argument.`);
 
       const connection = await connections.getClientConnection({ client_id });
 
-      const query = { client_id };
-      query[key] = document[key];
+      const query = { client_id, sku };
 
       // clean up document, removing identifiers that should be not updated
       // delete document._id;
@@ -41,7 +46,7 @@ export default ({ client_id, key = "sku", document }) =>
         }
       );
 
-      log(`${client_id}:${key}:${document[key]} done`);
+      log(`${client_id}:${sku} done`);
 
       return resolve(result);
     } catch (e) {

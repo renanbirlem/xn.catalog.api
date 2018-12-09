@@ -19,8 +19,8 @@ describe(`product get from database`, () => {
 
     describe(`on initialization`, () => {
         it(`should return a Promise`, () => {
-            const [client_id, product_id] = [1, 2];
-            const result = getProduct({ client_id, product_id });
+            const [client_id, sku] = [1, 2];
+            const result = getProduct({ client_id, sku });
 
             expect(result).toBeInstanceOf(Promise);
         });
@@ -34,24 +34,13 @@ describe(`product get from database`, () => {
             expect(promise).rejects.toThrowError(/client_id.*informed/i);
         });
 
-        it(`should reject with an Error if invalid default search value`, async () => {
+        it(`should reject with an Error if invalid sku`, async () => {
             const promise = getProduct({
                 client_id: 1,
-                // key: "sku", this is default, expects sku to be present
-                product_id: null
+                sku: null
             });
 
             expect(promise).rejects.toThrowError(/sku.*informed/i);
-        });
-
-        it(`should reject with an Error if invalid search value`, async () => {
-            const promise = getProduct({
-                client_id: 1,
-                key: "product_id",
-                sku: null // expects product_id, sku given
-            });
-
-            expect(promise).rejects.toThrowError(/product_id.*informed/i);
         });
 
         it(`should reject with an Error something bad happens`, async () => {
@@ -59,8 +48,8 @@ describe(`product get from database`, () => {
                 throw new Error();
             });
 
-            const [client_id, key, product_id] = [1, "product_id", 2];
-            const promise = getProduct({ client_id, key, product_id });
+            const [client_id, sku] = [1, 2];
+            const promise = getProduct({ client_id, sku });
 
             expect(promise).rejects.toThrowError();
         });
@@ -68,8 +57,8 @@ describe(`product get from database`, () => {
 
     describe(`dealing with documents`, () => {
         it(`document must have an _id`, done => {
-            const [client_id, key, product_id] = [1, "product_id", 2];
-            const promise = getProduct({ client_id, key, product_id });
+            const [client_id, sku] = [1, 2];
+            const promise = getProduct({ client_id, sku });
 
             promise.then(result => {
                 expect(typeof result).toEqual("object");
@@ -81,8 +70,8 @@ describe(`product get from database`, () => {
         it(`should resolve to null if not found`, () => {
             mockingoose.Product.toReturn(null, "findOne");
 
-            const [client_id, key, product_id] = [1, "product_id", 2];
-            const promise = getProduct({ client_id, key, product_id });
+            const [client_id, sku] = [1, 2];
+            const promise = getProduct({ client_id, sku });
 
             expect(promise).resolves.toBeNull();
         });

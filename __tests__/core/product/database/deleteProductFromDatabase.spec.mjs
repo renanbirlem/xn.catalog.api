@@ -20,8 +20,8 @@ describe(`product delete from database`, () => {
 
     describe(`on initialization`, () => {
         it(`should return a Promise`, () => {
-            const [client_id, key, sku] = [1, "sku", 1];
-            const result = deleteProduct({ client_id, key, sku });
+            const [client_id, sku] = [1, 1];
+            const result = deleteProduct({ client_id, sku });
 
             expect(result).toBeInstanceOf(Promise);
         });
@@ -34,11 +34,10 @@ describe(`product delete from database`, () => {
             expect(promise).rejects.toThrowError(/client_id.*informed/i);
         });
 
-        it(`should reject with an Error if search value not informed`, async () => {
+        it(`should reject with an Error if invalid sku`, () => {
             const promise = deleteProduct({
                 client_id: 1,
-                key: "sku",
-                product_id: 1 // expects sku
+                sku: null
             });
 
             expect(promise).rejects.toThrowError(/sku.*informed/i);
