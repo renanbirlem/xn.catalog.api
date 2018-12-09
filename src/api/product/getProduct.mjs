@@ -29,12 +29,17 @@ export default ({ client_id, sku }) =>
                 sku
             });
 
-            // if product found, save it to cache layer
             if (product) {
-                await saveProductToCache({ client_id, product });
-            }
+                resolve(product);
 
-            resolve(product);
+                // if product found, save it to cache layer
+                // do not await for cache operation result
+                if (product) {
+                    saveProductToCache({ client_id, product });
+                }
+            } else {
+                resolve(null);
+            }
         } catch (e) {
             reject(e);
         }
