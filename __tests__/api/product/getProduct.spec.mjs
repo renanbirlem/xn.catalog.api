@@ -18,7 +18,7 @@ describe(`product api`, () => {
         describe(`validate arguments`, () => {
             it(`should reject with Error if invalid client_id`, () => {
                 const result = getProduct({
-                    client_id: undefined
+                    client_id: null
                 });
 
                 expect(result).rejects.toThrowError(/client_id.*informed/i);
@@ -114,8 +114,26 @@ describe(`product api`, () => {
             });
         });
 
-        it(`should resolve null if document not found`, () => {});
+        it(`should resolve null if document not found`, () => {
+            const result = getProduct({
+                client_id: 1,
+                sku: 1
+            });
 
-        it(`should reject with Error if something bad happens`, () => {});
+            expect(result).resolves.toBeNull();
+        });
+
+        it(`should reject with Error if something bad happens`, () => {
+            getProductFromCache.mockImplementationOnce(() => {
+                throw new Error();
+            });
+
+            const result = getProduct({
+                client_id: 1,
+                sku: 1
+            });
+
+            expect(result).rejects.toThrowError();
+        });
     });
 });
