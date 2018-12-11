@@ -1,11 +1,11 @@
 import config from "./config";
 import * as connections from "./connections";
-import { app } from "./rest";
+import restApi from "./rest";
 
 // warm up redis connection
 connections.getRedisConnection({});
 
-app.listen(config.port, () => {
+restApi.listen(config.port, () => {
     global.console.log(`Listening on port ${config.port}!`);
     global.console.log(`Connected to MongoDB @ ${config.mongodb_uri}`);
 });
