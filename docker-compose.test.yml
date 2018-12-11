@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    command: npm test
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+      - PORT=3000
+      - NODE_ENV=development
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: "mongodb"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./.docker/mongodb/data:/data/db
+    ports:
+      - 27017:27017
+    command: mongod --smallfiles --logpath=/dev/null
