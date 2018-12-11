@@ -8,8 +8,8 @@ import debug from "debug";
 import config from "../config";
 import * as connections from "../connections";
 
-// import { treesRestApi } from "./tree";
-import productsRestApi from "./product";
+import treeRestApi from "./tree";
+import productRestApi from "./product";
 
 const log = debug("app");
 
@@ -71,7 +71,7 @@ const clientConnections = async function(request, response, next) {
 };
 
 app.use("/:client_id", authClient, clientConnections);
-// app.use("/:client_id/trees", treesRestApi);
-app.use("/:client_id/product", productsRestApi);
+app.use("/:client_id/tree", treeRestApi);
+app.use("/:client_id/product", productRestApi);
 
 export default app;
