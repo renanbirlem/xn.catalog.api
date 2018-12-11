@@ -1,4 +1,12 @@
 export default {
+    get port() {
+        return process.env.PORT || 3000;
+    },
+
+    get env() {
+        return process.env.NODE_ENV || "development";
+    },
+
     get mongodb_uri() {
         if (!process.env.MONGODB_URI) {
             throw new Error(`MONGODB_URI not provided`);
