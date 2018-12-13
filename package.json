@@ -16,7 +16,8 @@
         "mockingoose": "^2.11.0",
         "mongoose": "^5.3.15",
         "morgan": "^1.9.1",
-        "redis": "^2.8.0"
+        "redis": "^2.8.0",
+        "uuid": "^3.3.2"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
@@ -39,12 +40,20 @@
             "**/__tests__/**/*.?(m)js?(x)",
             "**/(*.)(spec|test).?(m)js?(x)"
         ],
-        "moduleFileExtensions": ["js", "json", "jsx", "node", "mjs"],
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "jsx",
+            "node",
+            "mjs"
+        ],
         "transform": {
             "^.+m?js$": "babel-jest"
         },
         "collectCoverage": true,
-        "coverageReporters": ["html"]
+        "coverageReporters": [
+            "html"
+        ]
     },
     "babel": {
         "env": {
