@@ -1,9 +1,9 @@
-import saveProduct from "../../../src/api/product/saveProduct";
-import saveProductToDatabase from "../../../src/core/product/database/saveProductToDatabase";
-import saveProductToCache from "../../../src/core/product/cache/saveProductToCache";
+import saveProduct from "../../../../src/api/product/saveProduct";
+import saveProductToDatabase from "../../../../src/core/product/database/saveProductToDatabase";
+import saveProductToCache from "../../../../src/core/product/cache/saveProductToCache";
 
-jest.mock("../../../src/core/product/database/saveProductToDatabase");
-jest.mock("../../../src/core/product/cache/saveProductToCache");
+jest.mock("../../../../src/core/product/database/saveProductToDatabase");
+jest.mock("../../../../src/core/product/cache/saveProductToCache");
 
 // integration test?
 describe(`product api`, () => {

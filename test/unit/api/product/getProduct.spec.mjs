@@ -1,11 +1,11 @@
-import getProduct from "../../../src/api/product/getProduct";
-import getProductFromDatabase from "../../../src/core/product/database/getProductFromDatabase";
-import getProductFromCache from "../../../src/core/product/cache/getProductFromCache";
-import saveProductToCache from "../../../src/core/product/cache/saveProductToCache";
+import getProduct from "../../../../src/api/product/getProduct";
+import getProductFromDatabase from "../../../../src/core/product/database/getProductFromDatabase";
+import getProductFromCache from "../../../../src/core/product/cache/getProductFromCache";
+import saveProductToCache from "../../../../src/core/product/cache/saveProductToCache";
 
-jest.mock("../../../src/core/product/database/getProductFromDatabase");
-jest.mock("../../../src/core/product/cache/saveProductToCache");
-jest.mock("../../../src/core/product/cache/getProductFromCache");
+jest.mock("../../../../src/core/product/database/getProductFromDatabase");
+jest.mock("../../../../src/core/product/cache/saveProductToCache");
+jest.mock("../../../../src/core/product/cache/getProductFromCache");
 
 // integration test?
 describe(`product api`, () => {

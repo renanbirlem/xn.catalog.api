@@ -3,13 +3,14 @@
   "version": "1.1.0",
   "main": "./src/main.mjs",
   "scripts": {
-    "dev": "nodemon --experimental-modules ./src/main.mjs",
+    "dev": "DEBUG=app* nodemon --experimental-modules ./src/main.mjs",
     "start": "node --experimental-modules ./src/main.mjs",
     "test": "jest --watchAll"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
+    "dotenv": "^6.2.0",
     "express": "^4.16.3",
     "helmet": "^3.15.0",
     "mockingoose": "^2.11.0",
@@ -26,7 +27,8 @@
     "jest": "^23.6.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.7",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "supertest": "^3.3.0"
   },
   "engines": {
     "node": "^10.x.x",

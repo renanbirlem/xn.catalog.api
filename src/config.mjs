@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 export default {
     get port() {
         return process.env.PORT || 3000;

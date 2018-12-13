@@ -1,4 +1,4 @@
-import * as productApi from "../../src/api/productApi";
+import * as productApi from "../../../src/api/productApi";
 
 // integration test?
 describe(`product api`, () => {

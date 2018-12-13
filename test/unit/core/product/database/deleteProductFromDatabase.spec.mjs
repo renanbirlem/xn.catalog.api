@@ -1,11 +1,11 @@
 import uuid from "uuid";
 import mongoose from "mongoose";
 import mockingoose from "mockingoose";
-import * as connections from "../../../../src/connections";
+import * as connections from "../../../../../src/connections";
 
-import deleteProduct from "../../../../src/core/product/database/deleteProductFromDatabase";
+import deleteProduct from "../../../../../src/core/product/database/deleteProductFromDatabase";
 
-jest.mock("../../../../src/connections");
+jest.mock("../../../../../src/connections");
 connections.getClientConnection.mockImplementation(() => mongoose);
 
 describe(`product delete from database`, () => {

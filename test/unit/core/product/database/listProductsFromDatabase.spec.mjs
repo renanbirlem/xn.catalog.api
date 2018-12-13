@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import mockingoose from "mockingoose";
-import * as connections from "../../../../src/connections";
+import * as connections from "../../../../../src/connections";
 
-import listProducts from "../../../../src/core/product/database/listProductsFromDatabase";
+import listProducts from "../../../../../src/core/product/database/listProductsFromDatabase";
 
-jest.mock("../../../../src/connections");
+jest.mock("../../../../../src/connections");
 connections.getClientConnection.mockImplementation(() => mongoose);
 
 describe(`products list from database`, () => {

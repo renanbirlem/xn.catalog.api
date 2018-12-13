@@ -1,11 +1,11 @@
 import uuid from "uuid";
 import mongoose from "mongoose";
 import mockingoose from "mockingoose";
-import * as connections from "../../../../src/connections";
+import * as connections from "../../../../../src/connections";
 
-import saveProduct from "../../../../src/core/product/database/saveProductToDatabase";
+import saveProduct from "../../../../../src/core/product/database/saveProductToDatabase";
 
-jest.mock("../../../../src/connections");
+jest.mock("../../../../../src/connections");
 connections.getClientConnection.mockImplementation(() => mongoose);
 
 describe(`product save to database`, () => {
@@ -20,8 +20,12 @@ describe(`product save to database`, () => {
 
     describe(`on initialization`, () => {
         it(`should return a Promise`, () => {
-            const [client_id, document] = [1, { sku: 1, name: "teste" }];
-            const result = saveProduct({ client_id, document });
+            const [client_id, sku, document] = [
+                1,
+                1,
+                { client_id: 1, sku: 1, name: "teste" }
+            ];
+            const result = saveProduct({ client_id, sku, document });
 
             expect(result).toBeInstanceOf(Promise);
         });
@@ -44,17 +48,27 @@ describe(`product save to database`, () => {
             expect(promise).rejects.toThrowError(/sku.*informed/i);
         });
 
-        it(`should reject with an Error if document does not match sku`, async () => {
+        it(`should reject with an Error if document does not match sku`, () => {
             const promise = saveProduct({
                 client_id: 1,
                 sku: 1,
-                document: { sku: 2, name: "teste" } // expects sku property
+                document: { client_id: 1, sku: 2, name: "teste" } // expects sku property
             });
 
             expect(promise).rejects.toThrowError(/sku.*match/i);
         });
 
-        it(`should reject with an Error something bad happens`, async () => {
+        it(`should reject with an Error if document does not match client_id`, () => {
+            const promise = saveProduct({
+                client_id: 1,
+                sku: 1,
+                document: { client_id: 2, sku: 1, name: "teste" } // expects sku property
+            });
+
+            expect(promise).rejects.toThrowError(/client_id.*match/i);
+        });
+
+        it(`should reject with an Error something bad happens`, () => {
             connections.getClientConnection.mockImplementationOnce(() => {
                 throw new Error();
             });
@@ -75,18 +89,19 @@ describe(`product save to database`, () => {
             const [client_id, sku, document] = [
                 1,
                 1,
-                { _id: uuid.v4(), sku: "1", name: "teste" }
+                {
+                    _id: uuid.v4(),
+                    client_id: 1,
+                    sku: "1",
+                    name: "teste"
+                }
             ];
 
             mockingoose.Product.toReturn(document, "findOneAndUpdate");
 
-            const promise = saveProduct({ client_id, sku, document });
-
-            promise.then(result => {
-                expect(result).toHaveProperty("_id", document._id);
-                expect(result).toHaveProperty("sku", document.sku);
-                done();
-            });
+            expect(
+                saveProduct({ client_id, sku, document })
+            ).resolves.toMatchObject(document);
         });
 
         it(`result must have an _id when inserting`, done => {
@@ -96,6 +111,7 @@ describe(`product save to database`, () => {
                 {
                     // _id: uuid.v4(), a new _id should be returned
                     sku: "1",
+                    client_id: 1,
                     name: "teste"
                 }
             ];
@@ -111,22 +127,23 @@ describe(`product save to database`, () => {
             });
         });
 
-        it(`should reject to an Error if operation fails`, () => {
-            mockingoose.Product.toReturn(new Error(), "findOneAndUpdate");
+        // it(`should reject to an Error if operation fails`, () => {
+        //     mockingoose.Product.toReturn(new Error(), "findOneAndUpdate");
 
-            const [client_id, sku, document] = [
-                1,
-                1,
-                {
-                    // _id: uuid.v4(), a new _id should be returned
-                    sku: "1",
-                    name: "teste"
-                }
-            ];
+        //     const [client_id, sku, document] = [
+        //         1,
+        //         1,
+        //         {
+        //             // _id: uuid.v4(), a new _id should be returned
+        //             sku: "1",
+        //             client_id: 1,
+        //             name: "teste"
+        //         }
+        //     ];
 
-            const promise = saveProduct({ client_id, sku, document });
+        //     const promise = saveProduct({ client_id, sku, document });
 
-            expect(promise).rejects.toThrowError();
-        });
+        //     expect(promise).rejects.toThrowError();
+        // });
     });
 });

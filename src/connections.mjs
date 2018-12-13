@@ -90,6 +90,7 @@ export const getClientConnection = async ({
         id: client_id
       });
     } catch (error) {
+      console.log(error);
       log(`connection failed for ${client_id}`);
       return null;
     }
