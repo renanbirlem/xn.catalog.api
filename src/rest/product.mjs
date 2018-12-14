@@ -24,7 +24,14 @@ api.post("/:sku", (request, response) => {
     productApi
         .saveProduct({ client_id, sku, document })
         .then(result => response.json(result))
-        .catch(error => response.status(500).send(error.message));
+        .catch(error => {
+            let statusCode = 500;
+            statusCode = /validation failed/i.test(error.message)
+                ? 400
+                : statusCode;
+
+            response.status(statusCode).send(error.message);
+        });
 });
 
 export default api;
