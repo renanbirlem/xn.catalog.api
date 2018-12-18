@@ -5,6 +5,12 @@
     "scripts": {
         "dev": "DEBUG=app* nodemon --experimental-modules ./src/main.mjs",
         "start": "node --experimental-modules ./src/main.mjs",
+        "clean": "rm -rf build",
+        "build": "babel ./src -d ./build",
+        "build-watch": "babel --watch ./src -d ./build",
+        "deploy": "sls deploy --stage dev",
+        "publish": "npm run clean && npm run build && npm run deploy",
+        "offline": "npm run clean && npm run build-watch & sls offline start",
         "test": "jest --watchAll"
     },
     "dependencies": {
@@ -20,8 +26,9 @@
         "uuid": "^3.3.2"
     },
     "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-core": "^6.26.3",
+        "@babel/cli": "^7.2.0",
+        "@babel/core": "^7.2.2",
+        "@babel/preset-env": "^7.2.0",
         "babel-jest": "^23.6.0",
         "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
         "eslint": "^5.6.0",
@@ -29,6 +36,7 @@
         "jest": "^23.6.0",
         "nodemon": "^1.18.7",
         "prettier": "^1.14.3",
+        "serverless-offline": "^3.31.3",
         "supertest": "^3.3.0"
     },
     "engines": {
@@ -40,22 +48,15 @@
             "**/__tests__/**/*.?(m)js?(x)",
             "**/(*.)(spec|test).?(m)js?(x)"
         ],
-        "moduleFileExtensions": [
-            "js",
-            "json",
-            "jsx",
-            "node",
-            "mjs"
-        ],
+        "moduleFileExtensions": ["js", "json", "jsx", "node", "mjs"],
         "transform": {
             "^.+m?js$": "babel-jest"
         },
         "collectCoverage": true,
-        "coverageReporters": [
-            "html"
-        ]
+        "coverageReporters": ["html"]
     },
     "babel": {
+        "presets": ["@babel/preset-env"],
         "env": {
             "test": {
                 "plugins": [
