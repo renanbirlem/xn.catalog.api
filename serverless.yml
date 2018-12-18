@@ -1,0 +1,32 @@
+service: beon-catalog-api
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-2
+  vpc:
+    securityGroupIds:
+      - sg-04cb708c905016104
+
+environment:
+  MONGODB_URI: mongodb://mongoadmin:mongoadmin@172.31.9.113:27017/admin?authSource=admin
+
+package:
+  exclude:
+    - coverage/**
+    - test/**
+    - .docker/**
+    - src/**
+
+functions:
+  trees_get:
+    handler: build/lambda/handler.trees_get
+    memorySize: 128
+    events:
+      - http: GET {client_id}/tree/list
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    port: 15000
